@@ -46,7 +46,7 @@ https://jsonbin.io
 
 ### 2. Create an account
 
-### Create a new bin with this content:
+### 3. Create a new bin with this content:
 ```json
 {
   "groups": [],
