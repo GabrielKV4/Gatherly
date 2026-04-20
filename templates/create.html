@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Group</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page create-page">
+        <div class="form-box">
+            <h1>Name your study group</h1>
+            <form method="POST" action="{{ url_for('create_group') }}" class="group-form">
+                <input type="text" name="name" placeholder="Group name" required>
+
+                <h1>What is the topic?</h1>
+                <input type="text" name="topic" placeholder="Topic" required>
+
+                <h2>Date (e.g. June 5th)</h2>
+                <input type="text" name="date" placeholder="Date" required>
+
+                <button type="submit" class="btn big-btn">Create Group</button>
+            </form>
+
+            <a href="{{ url_for('home') }}" class="back-link">Back</a>
+        </div>
+    </div>
+</body>
+</html>

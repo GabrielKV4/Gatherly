@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Groups</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page">
+        <div class="top-bar">
+            <a href="{{ url_for('create_group') }}" class="btn create-btn">Create</a>
+
+            <form method="GET" action="{{ url_for('home') }}">
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Search groups..."
+                    value="{{ query if query else '' }}"
+                    class="search-bar"
+                >
+            </form>
+        </div>
+
+        <div class="cards-container">
+            {% if groups %}
+                {% for g in groups %}
+                    <div class="group-card">
+                        <div class="card-row top-row">
+                            <a href="{{ url_for('group_page', group_id=g.id) }}" class="group-name">
+                                {{ g.name }}
+                            </a>
+
+                            <div class="group-date">{{ g.date }}</div>
+                            <div class="group-people">{{ g.people }} people</div>
+                        </div>
+
+                        <div class="card-row bottom-row">
+                            <div class="group-topic">{{ g.topic }}</div>
+
+                            {% if g.id in joined_ids %}
+                                <button class="btn joined-btn" disabled>Joined</button>
+                            {% else %}
+                                <form method="POST" action="{{ url_for('join_group', group_id=g.id) }}">
+                                    <button type="submit" class="btn join-btn">+1 Join</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-box">
+                    No study groups found.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
