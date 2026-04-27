@@ -4,8 +4,8 @@ from tkinter import messagebox
 import json, os, uuid
 
 FILE = 'study_groups.json'
-BG = '#33b864'
-CARD = '#EDE8D0'
+BG = '#04070F'
+CARD = '#191921'
 BTN = '#f2f2f2'
 
 class App:
