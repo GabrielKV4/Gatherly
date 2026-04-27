@@ -4,8 +4,8 @@ from tkinter import messagebox
 import json, os, uuid
 
 FILE = 'study_groups.json'
-BG = '#04070F'
-CARD = '#191921'
+BG = '#303357'
+CARD = '#8080BA'
 BTN = '#f2f2f2'
 
 class App:
@@ -84,13 +84,13 @@ class App:
             name_lbl.grid(row=0, column=0, sticky='w', padx=18, pady=(8, 0))
             name_lbl.bind('<Button-1>', lambda e, x=g: self.open_chat(x))
 
-            tk.Label(card, text=g['date'], bg='#EDE8D0',
+            tk.Label(card, text=g['date'], bg='#8080BA',
                      width=20, font=('Arial', 12)).grid(row=0, column=1, padx=10)
 
             tk.Label(card, text=f"{g['people']} people",
                      bg=CARD, font=('Arial', 12)).grid(row=0, column=2, padx=20)
 
-            tk.Label(card, text=g['topic'], bg='#EDE8D0',
+            tk.Label(card, text=g['topic'], bg='#8080BA',
                      font=('Arial', 11,'italic', 'bold'), width=15).grid(row=1, column=0,
                      sticky='w', padx=25, pady=8)
 
