@@ -3,26 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Group</title>
+    <title>Create Group | Gatherly</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="page create-page">
         <div class="form-box">
-            <h1>Name your study group</h1>
+            <h1>Create a Study Group</h1>
+            <p class="form-subtitle">Add the basic details so classmates know what your group is about.</p>
+
             <form method="POST" action="{{ url_for('create_group') }}" class="group-form">
-                <input type="text" name="name" placeholder="Group name" required>
+                <label>Group Name</label>
+                <input type="text" name="name" placeholder="Example: Biology Exam Review" required>
 
-                <h1>What is the topic?</h1>
-                <input type="text" name="topic" placeholder="Topic" required>
+                <label>Topic or Class</label>
+                <input type="text" name="topic" placeholder="Example: Biology 101" required>
 
-                <h2>Date (e.g. June 5th)</h2>
-                <input type="text" name="date" placeholder="Date" required>
+                <label>Meeting Date</label>
+                <input type="text" name="date" placeholder="Example: June 5th at 3 PM" required>
 
                 <button type="submit" class="btn big-btn">Create Group</button>
             </form>
 
-            <a href="{{ url_for('home') }}" class="back-link">Back</a>
+            <a href="{{ url_for('home') }}" class="back-link">← Back to groups</a>
         </div>
     </div>
 </body>

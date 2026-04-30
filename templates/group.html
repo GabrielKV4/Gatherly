@@ -3,13 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ group.name }}</title>
+    <title>{{ group.name }} | Gatherly</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="page group-page">
+
         <div class="chat-box">
             <h1 class="chat-title">{{ group.name }}</h1>
+
+            <div class="group-meta">
+                <span>{{ group.topic }}</span>
+                <span>{{ group.date }}</span>
+                <span>{{ group.people }} people</span>
+            </div>
 
             <div class="messages-area">
                 {% if group.messages %}
@@ -17,25 +24,40 @@
                         <div class="message-line">{{ msg }}</div>
                     {% endfor %}
                 {% else %}
-                    <div class="message-line empty-message">No messages yet.</div>
+                    <div class="message-line empty-message">
+                        No messages yet. Start the conversation.
+                    </div>
                 {% endif %}
             </div>
 
-            <form method="POST" action="{{ url_for('send_message', group_id=group.id) }}" class="message-form">
-                <input type="text" name="message" placeholder="Type a message..." required>
-                <button type="submit" class="btn">Send</button>
-            </form>
+            {% if joined %}
+                <form method="POST" action="{{ url_for('send_message', group_id=group.id) }}" class="message-form">
+                    <input type="text" name="message" placeholder="Type a message..." required>
+                    <button type="submit" class="btn">Send</button>
+                </form>
+            {% else %}
+                <p class="not-joined-message">Join this group to send messages.</p>
+            {% endif %}
 
             <div class="group-actions">
-                <a href="{{ url_for('home') }}" class="back-link">Back</a>
+                <a href="{{ url_for('home') }}" class="back-link">← Back</a>
 
-                {% if group.owner == "You" %}
-                    <form method="POST" action="{{ url_for('delete_group', group_id=group.id) }}">
-                        <button type="submit" class="delete-btn">Delete Group</button>
-                    </form>
-                {% endif %}
+                <div class="action-buttons">
+                    {% if joined %}
+                        <form method="POST" action="{{ url_for('leave_group', group_id=group.id) }}">
+                            <button type="submit" class="leave-btn">Leave Group</button>
+                        </form>
+                    {% endif %}
+
+                    {% if group.owner == "You" %}
+                        <form method="POST" action="{{ url_for('delete_group', group_id=group.id) }}">
+                            <button type="submit" class="delete-btn">Delete Group</button>
+                        </form>
+                    {% endif %}
+                </div>
             </div>
         </div>
+
     </div>
 </body>
 </html>

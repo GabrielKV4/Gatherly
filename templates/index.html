@@ -3,23 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Groups</title>
+    <title>Gatherly</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="page">
-        <div class="top-bar">
-            <a href="{{ url_for('create_group') }}" class="btn create-btn">Create</a>
 
-            <form method="GET" action="{{ url_for('home') }}">
+        <div class="hero-section">
+            <div>
+                <h1 class="app-title">Gatherly</h1>
+                <p class="app-subtitle">Find, create, and join study groups for your classes.</p>
+            </div>
+        </div>
+
+        <div class="top-bar">
+            <form method="GET" action="{{ url_for('home') }}" class="search-form">
                 <input
                     type="text"
                     name="q"
-                    placeholder="Search groups..."
+                    placeholder="Search groups or topics..."
                     value="{{ query if query else '' }}"
                     class="search-bar"
                 >
             </form>
+
+            <a href="{{ url_for('create_group') }}" class="btn create-btn">Create Group</a>
         </div>
 
         <div class="cards-container">
@@ -31,29 +39,32 @@
                                 {{ g.name }}
                             </a>
 
-                            <div class="group-date">{{ g.date }}</div>
-                            <div class="group-people">{{ g.people }} people</div>
-                        </div>
-
-                        <div class="card-row bottom-row">
-                            <div class="group-topic">{{ g.topic }}</div>
-
                             {% if g.id in joined_ids %}
                                 <button class="btn joined-btn" disabled>Joined</button>
                             {% else %}
                                 <form method="POST" action="{{ url_for('join_group', group_id=g.id) }}">
-                                    <button type="submit" class="btn join-btn">+1 Join</button>
+                                    <button type="submit" class="btn join-btn">Join Group</button>
                                 </form>
                             {% endif %}
+                        </div>
+
+                        <div class="group-topic">{{ g.topic }}</div>
+
+                        <div class="group-info">
+                            <span>{{ g.date }}</span>
+                            <span>{{ g.people }} people</span>
                         </div>
                     </div>
                 {% endfor %}
             {% else %}
                 <div class="empty-box">
-                    No study groups found.
+                    <h2>No study groups yet.</h2>
+                    <p>Create the first group to help classmates connect.</p>
+                    <a href="{{ url_for('create_group') }}" class="btn">Create Group</a>
                 </div>
             {% endif %}
         </div>
+
     </div>
 </body>
 </html>

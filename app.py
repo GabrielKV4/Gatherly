@@ -137,6 +137,26 @@ def join_group(group_id):
     
     return redirect(url_for('group_page', group_id=group_id))
 
+@app.route("/group/<group_id>/leave", methods=["POST"])
+def leave_group(group_id):
+    data = load_data()
+    group = find_group(group_id, data['groups'])
+
+    if not group:
+        return jsonify({"error": "Group not found."}), 404
+
+    if group_id in data['joined_ids']:
+        data['joined_ids'].remove(group_id)
+
+        if group.get('people', 0) > 0:
+            group['people'] -= 1
+
+        ok = save_data(data)
+        if not ok:
+            return jsonify({"error": "Failed to save data."}), 500
+
+    return redirect(url_for('home'))
+
 @app.route("/group/<group_id>/message", methods=["POST"])
 def send_message(group_id):
     data = load_data()
@@ -182,4 +202,4 @@ def delete_group(group_id):
     return redirect(url_for('home'))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
